@@ -1,10 +1,10 @@
 # Kaspresso
 
-[![CircleCI](https://circleci.com/gh/matzuk/Kaspresso.svg?style=svg&circle-token=218b4c5961fedf37a134fb94d522813be949ebe5)](https://circleci.com/gh/matzuk/Kaspresso)
-
 Kaspresso is a UiTest framework based on [Espresso](https://developer.android.com/training/testing/espresso), 
 [UIAutomator](https://developer.android.com/training/testing/ui-automator) and 
 [Kakao](https://github.com/agoda-com/Kakao) and assisting to write right and no-pain ui tests.
+
+![](https://habrastorage.org/webt/dw/jh/9k/dwjh9kypjl637kxj8tiaxwjvtp0.png)
 
 ## Capabilities
 
@@ -103,7 +103,7 @@ Part of interceptors was introduced in Kakao version 2.1, another part of interc
 #### Ability to call Adb commands
 
 Espresso or UiAutomator doesn't allow to call adb commands inside a test. 
-That's why we have written special [AdbServer repository](https://github.com/matzuk/AdbServer) fixing mentioned problem. 
+That's why we have written special [AdbServer repository](https://github.com/KasperskyLab/AdbServer) fixing mentioned problem. 
 
 In Kaspresso, the developer can call adb and cmd commands by ```AdbServer``` class.  
 #### Ability to work with Android System
@@ -129,18 +129,38 @@ The developer can tune any part of Kaspresso thanks to ```Kaspresso.Builder```.
 Kaspresso proposes such very important things for ui-tests as the set of rules on how to write ui-tests.
 
 ## Wiki
-For all information check [Kaspresso wiki](https://github.com/matzuk/Kaspresso/wiki)
+For all information check [Kaspresso wiki](https://github.com/KasperskyLab/Kaspresso/blob/master/wiki/00.%20Home.md)
 
 ## Integration
-// todo
 
-## Links
-// todo
+To use AdbServer device library, include the `jcenter` repository to your root `build.gradle` file (if it does not exist already):
+
+```
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+```
+
+And then add dependency to your module `build.gradle`:
+
+```
+implementation 'com.kaspersky.android-components:kaspresso:1.0.0'
+```
+
+If you are still using old Android Support libraries, use the `<version>-support` artifact:
+
+```
+implementation 'com.kaspersky.android-components:kaspresso:1.0.0-support'
+```
+
+## Support
+Russian support in telegram - t.me/kaspresso
 
 ## Contribution Policy
 Kaspresso is an open source project, and depends on its users to improve it. We are more than happy to find you interested in taking the project forward. <br>
-Kindly refer to the Contribution Guidelines for detailed information. <br>
-// todo add the reference to Contribution Guidelines
+Kindly refer to the [Contribution Guidelines](https://github.com/KasperskyLab/Kaspresso/blob/master/CONTRIBUTING.md) for detailed information. <br>
 
 ## License
-Kaspresso is open source and available under the [Apache License, Version 2.0](https://github.com/matzuk/Kaspresso/blob/external_master/LICENSE).
+Kaspresso is open source and available under the [Apache License, Version 2.0](https://github.com/KasperskyLab/Kaspresso/blob/master/LICENSE).
