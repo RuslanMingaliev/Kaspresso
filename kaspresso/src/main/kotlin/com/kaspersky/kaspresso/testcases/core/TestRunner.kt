@@ -87,7 +87,9 @@ internal class TestRunner<InitData, Data>(
 
         try {
             testRunWatcherInterceptor.onBeforeSectionStarted(testInfo)
-            beforeTestActions?.invoke(BaseTestContext(kaspresso))
+            val baseTestContext = BaseTestContext(kaspresso)
+            kaspresso.beforeEachTestAction?.invoke(baseTestContext)
+            beforeTestActions?.invoke(baseTestContext)
 
             val data: Data = dataProducer.invoke(initDataActions)
 
@@ -146,7 +148,9 @@ internal class TestRunner<InitData, Data>(
     ) {
         try {
             testRunWatcherInterceptor.onAfterSectionStarted(testInfo)
-            afterTestActions?.invoke(BaseTestContext(kaspresso))
+            val baseTestContext = BaseTestContext(kaspresso)
+            afterTestActions?.invoke(baseTestContext)
+            kaspresso.afterEachTestAction?.invoke(baseTestContext)
             testRunWatcherInterceptor.onAfterSectionFinishedSuccess(testInfo)
         } catch (e: Throwable) {
             testRunWatcherInterceptor.onAfterSectionFinishedFailed(testInfo, e)
