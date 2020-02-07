@@ -2,33 +2,48 @@ package com.kaspersky.kaspresso.params
 
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.PerformException
+import androidx.test.uiautomator.StaleObjectException
+import com.kaspersky.components.kautomator.intercepting.exception.UnfoundedUiObjectException
+import junit.framework.AssertionFailedError
 
 /**
- * The class that holds all the necessary for [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderImpl] parameters.
+ * The class that holds all the necessary for [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderSimpleImpl] parameters.
  */
-class FlakySafetyParams(
-    timeoutMs: Long = DEFAULT_TIMEOUT_MS,
-    intervalMs: Long = DEFAULT_INTERVAL_MS,
+class FlakySafetyParams private constructor(
+    timeoutMs: Long,
+    intervalMs: Long,
 
     /**
-     * The set of exceptions, if caught, the [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderImpl] will continue
+     * The set of exceptions, if caught, the [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderSimpleImpl] will continue
      * to attempt.
      */
-    var allowedExceptions: MutableSet<Class<out Throwable>> =
-        mutableSetOf(
-            PerformException::class.java,
-            NoMatchingViewException::class.java,
-            AssertionError::class.java
-        )
+    val allowedExceptions: Set<Class<out Throwable>>
 ) {
-    private companion object {
-        private const val DEFAULT_TIMEOUT_MS: Long = 5_000L
-        private const val DEFAULT_INTERVAL_MS: Long = 500L
+
+    companion object {
+        fun default() = FlakySafetyParams(
+            timeoutMs = 10_000L,
+            intervalMs = 500L,
+            allowedExceptions = setOf(
+                PerformException::class.java,
+                NoMatchingViewException::class.java,
+                AssertionError::class.java,
+                AssertionFailedError::class.java,
+                UnfoundedUiObjectException::class.java,
+                StaleObjectException::class.java
+            )
+        )
+
+        fun custom(
+            timeoutMs: Long,
+            intervalMs: Long,
+            allowedExceptions: Set<Class<out Throwable>>
+        ): FlakySafetyParams = FlakySafetyParams(timeoutMs, intervalMs, allowedExceptions)
     }
 
     /**
      * The timeout during which attempts will be made by the
-     * [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderImpl].
+     * [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderSimpleImpl].
      */
     var timeoutMs: Long = timeoutMs
         set(value) {
@@ -37,7 +52,8 @@ class FlakySafetyParams(
         }
 
     /**
-     * The interval at which attempts will be made by the [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderImpl].
+     * The interval at which attempts will be made by the
+     * [com.kaspersky.kaspresso.flakysafety.FlakySafetyProviderSimpleImpl].
      */
     var intervalMs: Long = intervalMs
         set(value) {

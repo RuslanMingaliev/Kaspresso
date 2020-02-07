@@ -3,13 +3,21 @@ package com.kaspersky.kaspresso.params
 /**
  * The class that holds all the necessary for [com.kaspersky.kaspresso.flakysafety.ContinuouslyProviderImpl] parameters.
  */
-class ContinuouslyParams(
-    timeoutMs: Long = DEFAULT_TIMEOUT_MS,
-    intervalMs: Long = DEFAULT_INTERVAL_MS
+class ContinuouslyParams private constructor(
+    timeoutMs: Long,
+    intervalMs: Long
 ) {
-    private companion object {
-        private const val DEFAULT_TIMEOUT_MS: Long = 5_000L
-        private const val DEFAULT_INTERVAL_MS: Long = 500L
+
+    companion object {
+        fun default() = ContinuouslyParams(
+            timeoutMs = 10_000,
+            intervalMs = 500
+        )
+
+        fun custom(timeoutMs: Long, intervalMs: Long) = ContinuouslyParams(
+            timeoutMs = timeoutMs,
+            intervalMs = intervalMs
+        )
     }
 
     /**

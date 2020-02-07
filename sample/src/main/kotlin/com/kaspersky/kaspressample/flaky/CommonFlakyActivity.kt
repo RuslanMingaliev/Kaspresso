@@ -4,26 +4,32 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.kaspersky.kaspressample.R
-import java.util.concurrent.TimeUnit
 import kotlinx.android.synthetic.main.activity_common_flaky.*
 
 class CommonFlakyActivity : AppCompatActivity() {
 
-    private companion object {
-        private val DELAY_FOR_BUTTON = TimeUnit.SECONDS.toMillis(6)
-        private val DELAY_FOR_TEXTVIEW = TimeUnit.SECONDS.toMillis(12)
+    companion object {
+        private const val FIRST_DELAY = 2_000L
+        private const val SECOND_DELAY = 15_000L
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_common_flaky)
+    }
 
+    override fun onResume() {
+        super.onResume()
+        startAsync(FIRST_DELAY, SECOND_DELAY)
+    }
+
+    private fun startAsync(firstDelayMs: Long, secondDelayMs: Long) {
         Handler(mainLooper)
-            .apply { postDelayed({ scroll_view_tv6.text = getString(R.string.common_flaky_final_textview) },
-                DELAY_FOR_TEXTVIEW
-            ) }
             .apply { postDelayed({ scroll_view_btn5.text = getString(R.string.common_flaky_final_button) },
-                DELAY_FOR_BUTTON
+                firstDelayMs
+            ) }
+            .apply { postDelayed({ scroll_view_tv6.text = getString(R.string.common_flaky_final_textview) },
+                secondDelayMs
             ) }
     }
 }

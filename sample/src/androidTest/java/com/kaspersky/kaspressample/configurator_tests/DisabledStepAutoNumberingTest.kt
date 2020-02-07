@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DisabledStepAutoNumberingTest : TestCase(
-    kaspressoBuilder = Kaspresso.Builder.default().apply {
+    kaspressoBuilder = Kaspresso.Builder.advanced().apply {
         stepParams.autonumber = false
     }
 ) {
@@ -57,7 +57,7 @@ class DisabledStepAutoNumberingTest : TestCase(
                     button2.click()
                     edit {
                         flakySafely(timeoutMs = 5000) { isVisible() }
-                        hasText(R.string.text_edit_text)
+                        hasText(R.string.simple_fragment_text_edittext)
                     }
                 }
             }
