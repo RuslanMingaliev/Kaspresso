@@ -3,22 +3,21 @@ apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'maven-publish'
 
 ext {
-    versionRelease = "1.1.0-alpha01"
-    versionSnapshot = "1.1.0-SNAPSHOT"
+    versionRelease = "1.0.0-alpha01"
+    versionSnapshot = "1.0.0-SNAPSHOT"
     artifactGroup = "com.kaspersky.android-components"
-    artifact = "kaspresso"
+    artifact = "kautomator"
     repository = "Kaspresso"
-    repositoryName = "Kaspresso"
+    repositoryName = "Kautomator"
     gitUrl = "https://github.com/KasperskyLab/Kaspresso.git"
 }
 
 publishing {
     publications {
-        Kaspresso(MavenPublication) {
+        Kautomator(MavenPublication) {
             afterEvaluate {
-                artifact "$rootDir/kaspresso/build/outputs/aar/kaspresso-release.aar"
+                artifact "$rootDir/kautomator/build/outputs/aar/kautomator-release.aar"
                 artifact sourcesJar
-                artifact javadocJar
             }
 
             groupId artifactGroup
@@ -40,11 +39,10 @@ publishing {
             }
         }
 
-        KaspressoSnapshot(MavenPublication) {
+        KautomatorSnapshot(MavenPublication) {
             afterEvaluate {
-                artifact "$rootDir/kaspresso/build/outputs/aar/kaspresso-release.aar"
+                artifact "$rootDir/kautomator/build/outputs/aar/kautomator-release.aar"
                 artifact sourcesJar
-                artifact javadocJar
             }
 
             groupId artifactGroup
@@ -71,7 +69,7 @@ publishing {
 bintray {
     user "$bintrayuser"
     key "$bintraykey"
-    publications 'Kaspresso'
+    publications 'Kautomator'
 
     pkg {
         repo = repository
@@ -97,7 +95,7 @@ artifactory {
         }
 
         defaults {
-            publications 'KaspressoSnapshot'
+            publications 'KautomatorSnapshot'
         }
     }
 

@@ -7,6 +7,7 @@
 | Name | Summary |
 |---|---|
 | [Acceptance](-acceptance/index.md) | `annotation class Acceptance` |
+| [AdbServerMust](-adb-server-must/index.md) | `annotation class AdbServerMust`<br>Special annotation to mark methods or classes that require started AdbServer for execution |
 | [Develop](-develop/index.md) | `annotation class Develop` |
 | [E2e](-e2e/index.md) | `annotation class E2e` |
 | [E2eFast](-e2e-fast/index.md) | `annotation class E2eFast` |
