@@ -20,7 +20,6 @@ import org.junit.Test
 class DeviceAccessibilitySampleTest : TestCase() {
 
     companion object {
-        private const val SETTINGS_UPDATE_DELAY = 1_000L
         private val SERVICE_CLASS_NAME = DeviceSampleAccessibilityService::class.java.canonicalName!!
     }
 
@@ -47,16 +46,16 @@ class DeviceAccessibilitySampleTest : TestCase() {
                     device.targetContext.packageName,
                     SERVICE_CLASS_NAME
                 )
-                Screen.idle(SETTINGS_UPDATE_DELAY)
-
-                assertTrue(isAccessibilityServiceEnabled())
+                flakySafely(allowedExceptions = setOf(AssertionError::class.java)) {
+                    assertTrue(isAccessibilityServiceEnabled())
+                }
             }
 
             step("Disable accessibility service") {
                 device.accessibility.disable()
-                Screen.idle(SETTINGS_UPDATE_DELAY)
-
-                assertFalse(isAccessibilityServiceEnabled())
+                flakySafely(allowedExceptions = setOf(AssertionError::class.java)) {
+                    assertFalse(isAccessibilityServiceEnabled())
+                }
             }
         }
     }
