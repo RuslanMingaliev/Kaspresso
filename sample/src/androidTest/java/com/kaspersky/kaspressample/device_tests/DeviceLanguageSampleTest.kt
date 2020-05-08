@@ -21,9 +21,24 @@ class DeviceLanguageSampleTest : TestCase() {
     @get:Rule
     val activityTestRule = ActivityTestRule(MainActivity::class.java, true, true)
 
+    private lateinit var default: Locale
+
     @Test
-    fun languageSampleTest() {
-        run {
+    fun languageSampleTest() =
+        before {
+            default = device.targetContext.resources.configuration.locales[0]
+        }.after {
+            device.language.switchInApp(default)
+        }.run {
+
+            step("Change locale to english") {
+                device.language.switchInApp(Locale.ENGLISH)
+                // it's so important to reload current active Activity
+                // you can do it using activityTestRule or manipulating in the Application through great Kaspresso
+                activityTestRule.finishActivity()
+                activityTestRule.launchActivity(null)
+                Thread.sleep(2_000)
+            }
 
             step("Start MainScreen in default locale") {
                 MainScreen {
@@ -34,7 +49,7 @@ class DeviceLanguageSampleTest : TestCase() {
                 }
             }
 
-            step("change language") {
+            step("Change locale to russian") {
                 device.language.switchInApp(Locale("ru"))
                 // it's so important to reload current active Activity
                 // you can do it using activityTestRule or manipulating in the Application through great Kaspresso
@@ -52,5 +67,4 @@ class DeviceLanguageSampleTest : TestCase() {
                 }
             }
         }
-    }
 }

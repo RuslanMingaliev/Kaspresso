@@ -14,13 +14,6 @@ import org.junit.Assume.assumeTrue
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * Attention please!
- * Before you start this test you must remove Kaspresso sample application at the device or
- * execute adb shell commands like "pm clear com.kaspersky.kaspressample"
- * to reset permissions granted before.
- * It's needed measure because of AndroidJUnit Runner specific that doesn't reset state of app between tests.
- */
 class DevicePermissionsSampleTest : TestCase() {
 
     @get:Rule
@@ -37,6 +30,7 @@ class DevicePermissionsSampleTest : TestCase() {
         before {
             // Run only on devices with Android M or later and skip the test otherwise.
             assumeTrue(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            //adbServer.performShell("pm revoke ${device.targetContext.packageName} ${Manifest.permission.READ_CALL_LOG}")
         }.after {
         }.run {
 
